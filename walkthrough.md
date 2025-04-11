@@ -1,11 +1,9 @@
-# Network Protocol Vulnerability Exploration Lab Walkthrough
+🛠️ Network Protocol Vulnerability Exploration Lab Walkthrough
 
-## Objective
-Explore vulnerabilities in common network protocols (FTP, TELNET, SSH, HTTP) by:
-- Performing brute-force attacks.
-- Using recovered credentials to access services.
-- Sniffing and analyzing network traffic.
-- Proposing mitigation strategies.
+Author: Wan Khairul Naim
+Course: [Network Security]
+Lab Title: Network Protocol Vulnerability Exploration
+Date: [4/14/2025]
 
 ---
 
