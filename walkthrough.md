@@ -103,6 +103,9 @@ nxc ssh <TARGET_IP> -u userlist.txt -p passlist.txt
 - Ensure **Intercept is ON**.
 - Click **Open Browser** to launch Burp’s embedded browser.
 
+  ![Screenshot 2025-04-18 004649](https://github.com/user-attachments/assets/434ec4d1-14e1-4aec-b619-7d3880a91a40)
+
+
 ### Step 2: Access the Target (Metasploitable2)
 - Open a Firefox browser (or use Burp's browser).
 - Enter the target IP address (e.g., `http://<TARGET_IP>`).
@@ -112,26 +115,33 @@ nxc ssh <TARGET_IP> -u userlist.txt -p passlist.txt
   - **Password:** `password`
 - In the left panel, click on **Brute Force**.
 - Enter any sample values into the username and password fields (e.g., `aaa` for both), then click **Login**.
+![Screenshot 2025-04-18 005800](https://github.com/user-attachments/assets/00278747-c090-4268-b837-82f50c3bb4f1)
+![Screenshot 2025-04-18 005901](https://github.com/user-attachments/assets/f484dd59-6303-4784-8649-32a2694ba08d)
 
-### Step 3: Capture and Forward the Request
-- In Burp’s `Proxy > Intercept` tab, the login request will be captured.
-- Click **Forward** to send the request to the server.
-- Continue clicking **Forward** if multiple requests are captured until the page finishes loading.
-- Go to the `Proxy > HTTP history` tab.
-- Locate the request to `/dvwa/vulnerabilities/brute/?username=aaa&password=aaa&Login=Login`.
-- Right-click the request and select **Send to Intruder**.
 
-### Step 4: Turn Off Interception
-- Return to `Proxy > Intercept` and click **Intercept is OFF** to stop intercepting further requests.
+
+### Step 3: Forward the Request
+- In Burp’s `Proxy > Intercept` tab, Everytime the intercept get request keep click **Forward** to send the intercepted request.
+- If multiple requests are caught, continue forwarding until the page loads.
+- Go to `Proxy > HTTP history` tab, and find `http://192.168.65.54/dvwa/vulnerabilities/brute/?username=aaa&password=aaa&Login=Login` then right click and choose **Send to Intruder**.
+
+![Screenshot 2025-04-18 011547](https://github.com/user-attachments/assets/42fbdebc-4e9a-4e73-8174-7f7206d40f4d)
+
+---
+
+### Step 4: Disable Intercept
+- Switch **Intercept is OFF** so that future browser requests are not paused.
+![Screenshot 2025-04-18 011645](https://github.com/user-attachments/assets/ffb34692-3f80-49d4-98aa-dfede894f190)
+---
 
 ### Step 5: Configure the Intruder Attack
-- Go to the **Intruder** tab.
-- Set the **Attack Type** to **Cluster Bomb**.
-- Highlight the username and password values in the request and mark them as payload positions.
-- In the **Payloads** tab:
-  - For Position 1 (Username), load a **username list** (e.g., `userlist.txt`).
-  - For Position 2 (Password), load a **password list** (e.g., `passlist.txt`).
-  - These files can typically be found in `/usr/share/wordlists`.
+- In **Intruder** tab:
+  - Set **Attack Type** to **Cluster Bomb**.
+  - Highlight and mark the username and password fields as **payload positions**.
+  - On the **Payload position**, Load with the file in the with the **Username list** (`userlist.txt`) and **Password list** (`passlist.txt`). (`Example:/usr/share/wordlists`)
+
+    ![Screenshot 2025-04-18 012509](https://github.com/user-attachments/assets/a02ce97c-fd4a-4911-942d-d872dfca82c2)
+---
 
 ### Step 6: Launch the Attack
 - Click **Start Attack**.
@@ -142,5 +152,45 @@ nxc ssh <TARGET_IP> -u userlist.txt -p passlist.txt
   **"Welcome to the password protected area admin"**
 - Failed attempts usually return:  
   **"Username and/or password incorrect"**
+
+![Screenshot 2025-04-18 013242](https://github.com/user-attachments/assets/baeea78f-9554-4245-90f4-757bb7dbf0e0)
+![Screenshot 2025-04-18 013424](https://github.com/user-attachments/assets/6e000750-4cde-43a9-a6dd-8d495b61045a)
+![Screenshot 2025-04-18 024126](https://github.com/user-attachments/assets/822b18c3-3da2-469f-81fc-7fef8e9474fa)
+
+---
+
+## 3. Sniffing and Traffic Analysis
+
+**🎯 Goal:** Analyze how user credentials are transmitted over various network protocols using Wireshark, highlighting the difference between plaintext and encrypted traffic.
+
+**🛠 Tool Used:** Wireshark  
+**🎯 Target IP:** `192.168.188.117`
+
+---
+
+In this task, we capture and inspect traffic from login attempts using different protocols (FTP, Telnet, SSH) to identify whether the transmitted credentials are visible or encrypted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
