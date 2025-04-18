@@ -170,12 +170,41 @@ nxc ssh <TARGET_IP> -u userlist.txt -p passlist.txt
 
 In this task, we capture and inspect traffic from login attempts using different protocols (FTP, Telnet, SSH) to identify whether the transmitted credentials are visible or encrypted.
 
+## 🔹 Steps
+1. Open Wireshark.
+> **Command:** 
+```bash
+wireshark
+```
+  - Choose `eth0` for sniffing traffic.
 
+![Screenshot 2025-04-18 085454](https://github.com/user-attachments/assets/bf6c38b7-90e3-4937-8bbf-7e8946b9131f)
+---
+2. Start capture on the network interface connected to the target for the FTP.
+   - (1) FTP command:
+```bash
+ftp <target-ip> 
+```
+   - Enter the `Username = msfadmin` and `Password = msfadmin` as we got exploit from brute force attack before.
 
+![Screenshot 2025-04-18 085400](https://github.com/user-attachments/assets/649e7e78-83d3-4fe8-a91a-6082d4afa384)
+![Screenshot 2025-04-18 085342](https://github.com/user-attachments/assets/d67d6d56-e7ab-4834-aa1b-c6ab525ca947)
+---
 
+4. Apply filter on Wireshark:
+```bash
+ftp || tcp.port == 21
+```
 
+3. Get the FTP packet for FTP.
+   - Choose the first one packet that have `FTP` and right click.
+   - Go to `Follow` and click `TCP Stream`.
 
+![Screenshot 2025-04-18 025804](https://github.com/user-attachments/assets/b5f02b2e-119f-421e-b5e7-d52bdc4ee86f)
+---
+![Screenshot 2025-04-18 085311](https://github.com/user-attachments/assets/5d7e3996-9b37-4c14-833d-63d807b71f05)
 
+   
 
 
 
